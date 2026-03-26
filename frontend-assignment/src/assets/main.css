@@ -113,6 +113,7 @@ body {
   display: flex;
   padding: 2rem;
   justify-content: center;
+   background-color: #000000;
 }
 
 .card {
