@@ -57,10 +57,10 @@ export default function TaskForm({ editing, onDone }) {
 }
 
 const styles = {
-  form:   { display:'flex', flexDirection:'column', gap:8, background:'#fff', padding:16, borderRadius:10, marginBottom:16, boxShadow:'0 1px 6px rgba(0,0,0,.07)' },
-  input:  { padding:'9px 12px', border:'1px solid #ddd', borderRadius:8, fontSize:14, width:'100%', boxSizing:'border-box' },
-  checkboxRow: { display:'flex', alignItems:'center', gap:8, fontSize:14, color:'#333', marginTop:2 },
-  btn:    { padding:'9px 20px', background:'#4f46e5', color:'#fff', border:'none', borderRadius:8, cursor:'pointer', fontSize:14 },
-  cancel: { padding:'9px 16px', background:'#f3f4f6', color:'#333', border:'none', borderRadius:8, cursor:'pointer', fontSize:14 },
-  err:    { color:'#b91c1c', fontSize:12 },
+  form:   { display:'flex', flexDirection:'column', gap:16, background:'var(--bg-surface)', padding:24, borderRadius:12, marginBottom:24, boxShadow:'var(--shadow-md)', border: '1px solid var(--border)' },
+  input:  { padding:'12px 14px', border:'1px solid var(--border)', background: 'var(--bg-base)', color: 'var(--text-primary)', borderRadius:8, fontSize:14, width:'100%', boxSizing:'border-box', transition: 'border-color 0.2s', fontFamily: 'inherit' },
+  checkboxRow: { display:'flex', alignItems:'center', gap:10, fontSize:14, color:'var(--text-primary)', marginTop:8, cursor: 'pointer' },
+  btn:    { padding:'12px 24px', background:'var(--accent)', color:'#fff', border:'none', borderRadius:8, cursor:'pointer', fontSize:14, fontWeight: 600, boxShadow: 'var(--shadow-sm)' },
+  cancel: { padding:'12px 24px', background:'transparent', color:'var(--text-primary)', border:'1px solid var(--border)', borderRadius:8, cursor:'pointer', fontSize:14, fontWeight: 500 },
+  err:    { color:'var(--danger)', fontSize:12, marginTop: -8 },
 };

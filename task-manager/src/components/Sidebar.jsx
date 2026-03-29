@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 const links = [
   { key: 'all', label: 'My Tasks' },
   { key: 'add', label: 'Add Task' },
@@ -9,40 +11,55 @@ const files = [
   { key: 'upload', label: 'Upload Files' }
 ];
 
-export default function Sidebar({ activeView, onChangeView }) {
+export default function Sidebar({ currentPath }) {
+  const navigate = useNavigate();
+
   return (
     <aside style={styles.aside}>
       <p style={styles.section}>Tasks</p>
-      {links.map((l) => (
-        <button
-          key={l.key}
-          type="button"
-          onClick={() => onChangeView?.(l.key)}
-          style={{ ...styles.link, ...(activeView === l.key ? styles.active : {}) }}
-        >
-          {l.label}
-        </button>
-      ))}
-      <br></br>
+      {links.map((l) => {
+        const path = `/dashboard/tasks/${l.key}`;
+        const isActive = currentPath?.includes(path);
+        return (
+          <button
+            key={l.key}
+            type="button"
+            onClick={() => navigate(path)}
+            style={{ ...styles.link, ...(isActive ? styles.active : {}) }}
+          >
+            {l.label}
+          </button>
+        );
+      })}
+      <div style={styles.divider}></div>
       <p style={styles.section}>Files</p>
-      {files.map((f) => (
-        <button
-          key={f.key}
-          type="button"
-          onClick={() => onChangeView?.(f.key)}
-          style={{ ...styles.link, ...(activeView === f.key ? styles.active : {}) }}
-        >
-          {f.label}
-        </button>
-      ))}
-
+      {files.map((f) => {
+        const path = `/dashboard/files/${f.key}`;
+        const isActive = currentPath?.includes(path);
+        return (
+          <button
+            key={f.key}
+            type="button"
+            onClick={() => navigate(path)}
+            style={{ ...styles.link, ...(isActive ? styles.active : {}) }}
+          >
+            {f.label}
+          </button>
+        );
+      })}
     </aside>
   );
 }
 
 const styles = {
-  aside:   { width:220, minHeight:'100%', background:'#f9f9fb', borderRight:'1px solid #eee', padding:'24px 0' },
-  section: { fontSize:11, fontWeight:500, color:'#888', textTransform:'uppercase', letterSpacing:1, padding:'0 20px', margin:'0 0 8px' },
-  link:    { display:'block', width:'100%', textAlign:'left', padding:'9px 20px', color:'#333', border:'none', background:'transparent', borderRadius:0, fontSize:14, cursor:'pointer' },
-  active:  { background:'#ede9fe', color:'#4f46e5', fontWeight:500 },
+  aside:   { width:240, minHeight:'100%', background:'var(--bg-surface)', borderRight:'1px solid var(--border)', padding:'24px 0' },
+  section: { fontSize:12, fontWeight:600, color:'var(--text-secondary)', textTransform:'uppercase', letterSpacing:1, padding:'0 20px', margin:'0 0 12px' },
+  divider: { 
+    height: '1px', 
+    background: 'var(--border)', 
+    width: '80%', 
+    margin: '20px auto' 
+  },
+  link:    { display:'block', width:'100%', textAlign:'left', padding:'10px 20px', color:'var(--text-primary)', border:'none', background:'transparent', borderRadius:0, fontSize:15, cursor:'pointer', transition: 'background-color 0.2s, color 0.2s', borderLeft: '3px solid transparent' },
+  active:  { background:'var(--accent-bg)', color:'var(--accent)', borderLeft:'3px solid var(--accent)', fontWeight:600 },
 };

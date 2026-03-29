@@ -1,24 +1,29 @@
-import { useState } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import TaskManager from '../features/tasks/TaskManager';
+import TaskDetail from '../features/tasks/TaskDetail';
 import FilesManager from '../features/files/FilesManager';
+import FileDetail from '../features/files/FileDetail';
 
 export default function Dashboard() {
-  const [activeView, setActiveView] = useState('all');
-
-  const isTaskView = ['all', 'add', 'pending', 'completed'].includes(activeView);
+  const { pathname } = useLocation();
 
   return (
-    <div style={{ display:'flex', flexDirection:'column', height:'100vh' }}>
+    <div style={{ display:'flex', flexDirection:'column', height:'100vh', background: 'var(--bg-base)' }}>
       <Navbar />
       <div style={{ display:'flex', flex:1, overflow:'hidden' }}>
-        <Sidebar activeView={activeView} onChangeView={setActiveView} />
-        {isTaskView ? (
-          <TaskManager activeView={activeView} onChangeView={setActiveView} />
-        ) : (
-          <FilesManager mode={activeView} onChangeView={setActiveView} />
-        )}
+        <Sidebar currentPath={pathname} />
+        <Routes>
+          <Route path="/" element={<Navigate to="tasks/all" replace />} />
+          <Route path="tasks" element={<Navigate to="tasks/all" replace />} />
+          <Route path="tasks/:view" element={<TaskManager />} />
+          <Route path="task/:id" element={<TaskDetail />} />
+          <Route path="files" element={<Navigate to="files/files" replace />} />
+          <Route path="files/:mode" element={<FilesManager />} />
+          <Route path="file/:id" element={<FileDetail />} />
+          <Route path="*" element={<Navigate to="tasks/all" replace />} />
+        </Routes>
       </div>
     </div>
   );

@@ -1,0 +1,56 @@
+Search bar
+--------------------------------------------------------------------------
+
+Here is a complete breakdown of exactly how the search bar functions under the hood within your [TaskManager](cci:1://file:///d:/inv/frontend-task/frontend-task/task-manager/src/features/tasks/TaskManager.jsx:7:0-91:1) component:
+
+### 1. The Search State
+First, we added a new piece of local state to the component to keep track of exactly what you type into the search box:
+```javascript
+const [searchQuery, setSearchQuery] = useState('');
+```
+
+### 2. The Input Element
+Then, we added an HTML `<input>` element to the header of your dashboard. We bound its `value` to your `searchQuery` state, and told it to update that state every time you type a letter using the `onChange` event:
+```javascript
+<input 
+  type="text" 
+  placeholder="Search tasks..." 
+  value={searchQuery} 
+  onChange={(e) => setSearchQuery(e.target.value)} 
+  style={styles.searchInput} 
+/>
+```
+
+### 3. The Filtering Engine
+The real magic happens in the `filteredTasks` variable. Rather than just returning all tasks, we added a custom block of logic that evaluates every single task in your Redux store:
+
+```javascript
+const filteredTasks = list.filter((task) => {
+  // Step A: Respect the current tab viewing rules
+  if (activeView === 'pending' && Boolean(task.is_completed)) return false;
+  if (activeView === 'completed' && !task.is_completed) return false;
+  
+  // Step B: The Search Logic
+  if (searchQuery.trim() !== '') {
+    // 1. Convert what the user typed to lowercase
+    const q = searchQuery.toLowerCase(); 
+    
+    // 2. Check if the task's title or description contains the search text
+    const matchTitle = task.title?.toLowerCase().includes(q);
+    const matchDesc = task.description?.toLowerCase().includes(q);
+    
+    // 3. If neither match, filter the task out (hide it)
+    if (!matchTitle && !matchDesc) return false;
+  }
+  
+  // If we made it here, the task matches the search!
+  return true;
+});
+```
+
+### 4. Dynamic Rendering
+Finally, instead of mapping over your entire database of tasks, React maps over `filteredTasks`:
+```javascript
+{filteredTasks.map((task) => <TaskItem key={task.id} task={task} onEdit={handleEdit}/>)}
+```
+Because of how React's state management works, the moment you type a letter into the input element (updating `searchQuery`), React instantly re-runs the `filteredTasks` filter and redraws only the `<TaskItem>` components that match what you're looking for!
