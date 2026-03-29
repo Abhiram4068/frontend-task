@@ -10,7 +10,14 @@ export const fetchFiles = createAsyncThunk('files/fetchAll', async (_, { rejectW
     return rejectWithValue(e.response?.data || 'Failed to fetch files');
   }
 });
-
+export const deleteFile   = createAsyncThunk('files/delete', async (id, { rejectWithValue }) => {
+  try {
+    await axiosInstance.delete(`/files/${id}/delete/`);
+    return id;
+  } catch (e) {
+    return rejectWithValue(e.response?.data || 'Failed to delete file');
+  }
+});
 export const uploadFiles = createAsyncThunk('files/upload', async (fileList, { rejectWithValue }) => {
   try {
     const formData = new FormData();
@@ -66,6 +73,9 @@ const filesSlice = createSlice({
       .addCase(uploadFiles.rejected, (s, a) => {
         s.uploadStatus = 'failed';
         s.error = a.payload;
+      })
+      .addCase(deleteFile.fulfilled, (s, a) => {
+        s.list = s.list.filter((f) => f.id !== a.payload);
       });
   },
 });

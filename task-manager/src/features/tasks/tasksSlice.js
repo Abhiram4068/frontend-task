@@ -41,7 +41,7 @@ const tasksSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchTasks.pending,     (s) => { s.status = 'loading'; s.error = null; })
-      .addCase(fetchTasks.fulfilled,   (s, a) => { s.status = 'succeeded'; s.list = a.payload; })
+      .addCase(fetchTasks.fulfilled,   (s, a) => { s.status = 'succeeded'; s.list = [...a.payload].reverse(); })
       .addCase(fetchTasks.rejected,    (s, a) => { s.status = 'failed'; s.error = a.payload; })
       .addCase(createTask.fulfilled,   (s, a) => {
         if (a.payload) s.list.unshift(a.payload);

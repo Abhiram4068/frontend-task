@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { generateDownloadUrl } from './filesSlice';
+import { generateDownloadUrl, deleteFile } from './filesSlice';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ export default function FileList({ onDownloadCompleted }) {
   const navigate = useNavigate();
   const { list, status, error } = useSelector((s) => s.files);
   const [downloadingId, setDownloadingId] = useState(null);
+  const [fileToDelete, setFileToDelete] = useState(null);
 
   const handleDownload = async (fileId) => {
     try {
@@ -44,6 +45,12 @@ export default function FileList({ onDownloadCompleted }) {
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
             <button
+              style={styles.deleteBtn}
+              onClick={() => setFileToDelete(f)}
+            >
+              Delete
+            </button>
+            <button
               style={styles.viewBtn}
               onClick={() => navigate(`/dashboard/file/${f.id}`)}
             >
@@ -59,6 +66,34 @@ export default function FileList({ onDownloadCompleted }) {
           </div>
         </div>
       ))}
+
+      {fileToDelete && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modalContent}>
+            <h4 style={{ margin: '0 0 10px 0', fontSize: 18, color: 'var(--text-primary)' }}>Delete File?</h4>
+            <p style={{ margin: '0 0 20px 0', fontSize: 14, color: 'var(--text-secondary)' }}>
+              Are you sure you want to remove "<strong>{fileToDelete.name?.split('/').pop() || fileToDelete.name}</strong>"? This action cannot be undone.
+            </p>
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
+              <button 
+                style={styles.cancelBtn} 
+                onClick={() => setFileToDelete(null)}
+              >
+                Cancel
+              </button>
+              <button 
+                style={styles.confirmDelBtn} 
+                onClick={() => {
+                   dispatch(deleteFile(fileToDelete.id));
+                   setFileToDelete(null);
+                }}
+              >
+                Confirm Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -69,5 +104,15 @@ const styles = {
   meta: { fontSize: 13, color: 'var(--text-secondary)' },
   viewBtn: { padding: '8px 14px', background: 'var(--success)', color: 'var(--text-primary)', border: '1px solid var(--border)', borderRadius: 8, cursor: 'pointer', fontSize: 13, whiteSpace: 'nowrap', transition: 'all 0.2s', fontWeight: 500 },
   downloadBtn: { padding: '8px 14px', background: 'var(--bg-surface-hover)', color: 'var(--text-primary)', border: '1px solid var(--border)', borderRadius: 8, cursor: 'pointer', fontSize: 13, whiteSpace: 'nowrap', transition: 'all 0.2s', fontWeight: 500 },
+  deleteBtn: { padding: '8px 14px', background: 'var(--danger-bg)', color: 'var(--danger)', border: 'none', borderRadius: 8, cursor: 'pointer', fontSize: 13, whiteSpace: 'nowrap', transition: 'all 0.2s', fontWeight: 500 },
+  
+  modalOverlay: {
+    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+    background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+  },
+  modalContent: {
+    background: 'var(--bg-surface)', border: '1px solid var(--border)', padding: 24, borderRadius: 12, width: '90%', maxWidth: 350, boxShadow: 'var(--shadow-lg)'
+  },
+  cancelBtn: { padding: '8px 16px', background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)', borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 500 },
+  confirmDelBtn: { padding: '8px 16px', background: 'var(--danger)', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 500 },
 };
-

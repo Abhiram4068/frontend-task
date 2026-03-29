@@ -1,14 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 
 const links = [
-  { key: 'all', label: 'My Tasks' },
-  { key: 'add', label: 'Add Task' },
-  { key: 'pending', label: 'Pending' },
-  { key: 'completed', label: 'Completed' },
+  { path: '/dashboard/overview', label: 'Dashboard Overview' },
+  { path: '/dashboard/tasks/all', label: 'My Tasks' },
+  { path: '/dashboard/tasks/add', label: 'Add Task' },
+  { path: '/dashboard/tasks/pending', label: 'Pending' },
+  { path: '/dashboard/tasks/completed', label: 'Completed' },
 ];
 const files = [
-  { key: 'files', label: 'My Files' },
-  { key: 'upload', label: 'Upload Files' }
+  { path: '/dashboard/files/files', label: 'My Files' },
+  { path: '/dashboard/files/upload', label: 'Upload Files' }
 ];
 
 export default function Sidebar({ currentPath }) {
@@ -18,13 +19,12 @@ export default function Sidebar({ currentPath }) {
     <aside style={styles.aside}>
       <p style={styles.section}>Tasks</p>
       {links.map((l) => {
-        const path = `/dashboard/tasks/${l.key}`;
-        const isActive = currentPath?.includes(path);
+        const isActive = currentPath?.includes(l.path) || (currentPath === '/dashboard' && l.path === '/dashboard/overview');
         return (
           <button
-            key={l.key}
+            key={l.path}
             type="button"
-            onClick={() => navigate(path)}
+            onClick={() => navigate(l.path)}
             style={{ ...styles.link, ...(isActive ? styles.active : {}) }}
           >
             {l.label}
@@ -34,13 +34,12 @@ export default function Sidebar({ currentPath }) {
       <div style={styles.divider}></div>
       <p style={styles.section}>Files</p>
       {files.map((f) => {
-        const path = `/dashboard/files/${f.key}`;
-        const isActive = currentPath?.includes(path);
+        const isActive = currentPath?.includes(f.path);
         return (
           <button
-            key={f.key}
+            key={f.path}
             type="button"
-            onClick={() => navigate(path)}
+            onClick={() => navigate(f.path)}
             style={{ ...styles.link, ...(isActive ? styles.active : {}) }}
           >
             {f.label}
