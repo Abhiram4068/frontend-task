@@ -19,10 +19,11 @@ export default function TaskManager() {
     if (activeView === 'add') {
       setEditingTask(null);
       setShowForm(true);
-    } else if (!editingTask) {
+    } else {
+      setEditingTask(null);
       setShowForm(false);
     }
-  }, [activeView, editingTask]);
+  }, [activeView]);
 
   const handleEdit = (task) => { setEditingTask(task); setShowForm(true); };
   const handleDone = () => {

@@ -67,7 +67,7 @@ export default function TaskItem({ task, onEdit }) {
 }
 
 const styles = {
-  card:    { background:'var(--bg-surface)', borderRadius:10, padding:'16px 20px', marginBottom:12, boxShadow:'var(--shadow-sm)', display:'flex', alignItems:'flex-start', gap:12, position: 'relative', border: '1px solid var(--border)' },
+  card:    { background:'var(--bg-surface)', borderRadius:5, padding:'16px 20px', marginBottom:12, boxShadow:'var(--shadow-sm)', display:'flex', alignItems:'flex-start', gap:12, position: 'relative', border: '1px solid var(--border)' },
   row:     { display:'flex', alignItems:'center', gap:10, marginBottom:8 },
   title:   { fontWeight:500, fontSize:15, color: 'var(--text-primary)' },
   desc:    { fontSize:13, color:'var(--text-secondary)', margin:0 },

@@ -100,11 +100,11 @@ export default function FileDetail() {
 
 const styles = {
   backBtn: { background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-secondary)', padding: '10px 18px', borderRadius: '8px', cursor: 'pointer', marginBottom: '24px', fontSize: '14px', transition: 'background-color 0.2s', fontWeight: 500 },
-  card: { background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: '12px', padding: '36px', boxShadow: 'var(--shadow-md)' },
+  card: { background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: '1px', padding: '36px', boxShadow: 'var(--shadow-md)' },
   headerRow: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px', borderBottom: '1px solid var(--border)', paddingBottom: '24px', gap: 16 },
   title: { margin: 0, fontSize: '28px', color: 'var(--text-primary)', fontWeight: 600, wordBreak: 'break-word', lineHeight: 1.3 },
   downloadPrimaryBtn: { padding: '12px 24px', background: 'var(--accent)', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '15px', fontWeight: 600, boxShadow: 'var(--shadow-sm)', whiteSpace: 'nowrap', transition: 'opacity 0.2s' },
-  metaBox: { display: 'flex', flexDirection: 'column', gap: '14px', background: 'var(--bg-base)', padding: '24px', borderRadius: '10px', border: '1px solid var(--border)' },
+  metaBox: { display: 'flex', flexDirection: 'column', gap: '14px', background: 'var(--bg-base)', padding: '24px', borderRadius: '5px', border: '1px solid var(--border)' },
   metaText: { margin: 0, fontSize: '15px', color: 'var(--text-secondary)', display: 'flex', gap: 8 },
   metaLabel: { color: 'var(--text-primary)', minWidth: '94px', display: 'inline-block' }
 };

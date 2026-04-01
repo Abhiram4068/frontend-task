@@ -17,7 +17,7 @@ export default function TaskForm({ editing, onDone }) {
     const payload = {
       title: data.title,
       description: data.description || '',
-      is_completed: Boolean(data.is_completed),
+      is_completed: data.is_completed === true || data.is_completed === 'on',
     };
 
     let result;
@@ -44,7 +44,11 @@ export default function TaskForm({ editing, onDone }) {
         {...register('description')}/>
 
       <label style={styles.checkboxRow}>
-        <input type="checkbox" {...register('is_completed')} />
+        <input
+  type="checkbox"
+  {...register('is_completed')}
+  defaultChecked={!!(editing?.is_completed)}
+/>
         Mark as completed
       </label>
 

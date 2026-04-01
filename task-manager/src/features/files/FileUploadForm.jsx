@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadFiles } from './filesSlice';
+import { uploadFiles, fetchFiles } from './filesSlice';
 import { useState } from 'react';
 
 const MAX_SIZE = 10 * 1024 * 1024; // 10MB
@@ -37,6 +37,7 @@ export default function FileUploadForm({ onUploaded }) {
 
     const action = await dispatch(uploadFiles(selectedFiles));
     if (uploadFiles.fulfilled.match(action)) {
+      dispatch(fetchFiles());
       setSelectedFiles([]);
       e.target.reset(); // Visually clear the file input
       onUploaded?.();
