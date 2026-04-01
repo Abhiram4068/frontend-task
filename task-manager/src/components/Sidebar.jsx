@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 const links = [
-  { path: '/dashboard/overview', label: 'Dashboard Overview' },
+  { path: '/dashboard/overview', label: 'Dashboard' },
   { path: '/dashboard/tasks/all', label: 'My Tasks' },
   { path: '/dashboard/tasks/add', label: 'Add Task' },
   { path: '/dashboard/tasks/pending', label: 'Pending' },

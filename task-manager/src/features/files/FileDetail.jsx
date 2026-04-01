@@ -86,6 +86,12 @@ export default function FileDetail() {
               {file.uploaded_by}
             </p>
           )}
+          {file.uploaded_by && (
+            <p style={styles.metaText}>
+              <strong style={styles.metaLabel}>Uploaded at:</strong> 
+              {file.created_at}
+            </p>
+          )}
         </div>
       </div>
     </div>
